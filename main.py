@@ -40,7 +40,8 @@ def load_model_from_config(config, ckpt, verbose=False):
         print('unexpected keys:')
         print(u)
 
-    model.cuda()
+    #model.mps()
+    model.to(torch.device("mps"))
     return model
 
 
@@ -695,7 +696,7 @@ if __name__ == '__main__':
         # merge trainer cli with config
         trainer_config = lightning_config.get('trainer', OmegaConf.create())
         # default to ddp
-        trainer_config['accelerator'] = 'ddp'
+        trainer_config['strategy'] = 'ddp'
         for k in nondefault_trainer_args(opt):
             trainer_config[k] = getattr(opt, k)
         if not 'gpus' in trainer_config:
@@ -864,6 +865,7 @@ if __name__ == '__main__':
         ]
         trainer_kwargs['max_steps'] = trainer_opt.max_steps
 
+        trainer_opt.accelerator = 'mps'
         trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
         trainer.logdir = logdir  ###
 
