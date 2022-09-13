@@ -866,6 +866,7 @@ if __name__ == '__main__':
         trainer_kwargs['max_steps'] = trainer_opt.max_steps
 
         trainer_opt.accelerator = 'mps'
+        trainer_opt.detect_anomaly = True
         trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
         trainer.logdir = logdir  ###
 
