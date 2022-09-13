@@ -422,7 +422,7 @@ class ImageLogger(Callback):
         self.batch_freq = batch_frequency
         self.max_images = max_images
         self.logger_log_images = {
-            pl.loggers.TestTubeLogger: self._testtube,
+            #pl.loggers.TestTubeLogger: self._testtube,
         }
         self.log_steps = [
             2**n for n in range(int(np.log2(self.batch_freq)) + 1)
@@ -742,15 +742,15 @@ if __name__ == '__main__':
                     'id': nowname,
                 },
             },
-            'testtube': {
-                'target': 'pytorch_lightning.loggers.TestTubeLogger',
+            'csv': {
+                'target': 'pytorch_lightning.loggers.CSVLogger',
                 'params': {
-                    'name': 'testtube',
+                    'name': 'csv',
                     'save_dir': logdir,
                 },
             },
         }
-        default_logger_cfg = default_logger_cfgs['testtube']
+        default_logger_cfg = default_logger_cfgs['csv']
         if 'logger' in lightning_config:
             logger_cfg = lightning_config.logger
         else:
