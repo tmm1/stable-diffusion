@@ -555,7 +555,7 @@ class CUDACallback(Callback):
             torch.cuda.synchronize(trainer.root_gpu)
         self.start_time = time.time()
 
-    def on_train_epoch_end(self, trainer, pl_module, outputs):
+    def on_train_epoch_end(self, trainer, pl_module, outputs=None):
         if torch.cuda.is_available():
             torch.cuda.synchronize(trainer.root_gpu)
         epoch_time = time.time() - self.start_time
