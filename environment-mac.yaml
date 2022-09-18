@@ -37,7 +37,7 @@ dependencies:
   - scipy==1.9.1
   - streamlit==1.12.2
   - sympy==1.10.1
-  - tensorboard==2.9.0
+  - tensorboard
   - torchmetrics==0.9.3
   - pip:
     - flask==2.1.3
