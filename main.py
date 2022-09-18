@@ -423,7 +423,7 @@ class ImageLogger(Callback):
         self.batch_freq = batch_frequency
         self.max_images = max_images
         self.logger_log_images = {
-            pl.loggers.CSVLogger: self._testtube,
+            #pl.loggers.CSVLogger: self._testtube,
         }
         self.log_steps = [
             2**n for n in range(int(np.log2(self.batch_freq)) + 1)
