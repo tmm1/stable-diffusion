@@ -719,6 +719,7 @@ if __name__ == '__main__':
         trainer_config['strategy'] = 'ddp'
         if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
             trainer_config['strategy'] = 'dp'
+            trainer_config['accelerator'] = 'mps'
         for k in nondefault_trainer_args(opt):
             trainer_config[k] = getattr(opt, k)
         if not 'gpus' in trainer_config:
@@ -886,9 +887,6 @@ if __name__ == '__main__':
             instantiate_from_config(callbacks_cfg[k]) for k in callbacks_cfg
         ]
         trainer_kwargs['max_steps'] = trainer_opt.max_steps
-
-        if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
-            trainer_opt.accelerator = 'mps'
 
         trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
         trainer.logdir = logdir  ###
