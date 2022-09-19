@@ -716,7 +716,9 @@ if __name__ == '__main__':
         # merge trainer cli with config
         trainer_config = lightning_config.get('trainer', OmegaConf.create())
         # default to ddp
-        trainer_config['strategy'] = 'dp'
+        trainer_config['strategy'] = 'ddp'
+        if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+            trainer_config['strategy'] = 'dp'
         for k in nondefault_trainer_args(opt):
             trainer_config[k] = getattr(opt, k)
         if not 'gpus' in trainer_config:
@@ -885,8 +887,9 @@ if __name__ == '__main__':
         ]
         trainer_kwargs['max_steps'] = trainer_opt.max_steps
 
-        trainer_opt.accelerator = 'mps'
-        #trainer_opt.detect_anomaly = True
+        if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+            trainer_opt.accelerator = 'mps'
+
         trainer = Trainer.from_argparse_args(trainer_opt, **trainer_kwargs)
         trainer.logdir = logdir  ###
 
