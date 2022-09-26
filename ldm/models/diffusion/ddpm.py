@@ -1891,7 +1891,7 @@ class LatentDiffusion(DDPM):
         N=8,
         n_row=4,
         sample=True,
-        ddim_steps=200,
+        ddim_steps=50,
         ddim_eta=1.0,
         return_keys=None,
         quantize_denoised=True,
